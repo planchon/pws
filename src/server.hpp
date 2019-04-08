@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -11,30 +12,36 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#define MAX_WAITING_CONNEXION 64
+#define BUFSIZE 8096
+
 // all the common web extension used. 
 struct {
   char * ext;
   char * filetype;
 } extensions_mime [] = {
-  {"gif", "image/gif" },  
-  {"jpg", "image/jpg" }, 
+  {"gif" ,"image/gif" },  
+  {"jpg" ,"image/jpg" }, 
   {"jpeg","image/jpeg"},
-  {"png", "image/png" },  
-  {"ico", "image/ico" },  
-  {"zip", "image/zip" },  
-  {"gz",  "image/gz"  },  
-  {"tar", "image/tar" },  
-  {"htm", "text/html" },  
+  {"png" ,"image/png" },  
+  {"ico" ,"image/ico" },  
+  {"zip" ,"image/zip" },  
+  {"gz"  ,"image/gz"  },  
+  {"tar" ,"image/tar" },  
+  {"htm" ,"text/html" },  
   {"html","text/html" },
-  {"css","text/css"   },
+  {"css" ,"text/css"  },
   {0,0}
 };
 
-class server {
-  int port, listenSocket, hit;
-  static struct sockaddr_in server_addr;
+class Server {
+  int listenSocket, pip, clientSocket, hit, port;
+  struct sockaddr_in server_addr;
+  struct sockaddr_in client_addr;
+  socklen_t clientLength = sizeof(client_addr);
 public:
-  server() { port(port)} { };
+  Server(int PORT);
   int start();
-  int stop();
-}
+  int run();
+  int processInput(int client, int hit);
+};

@@ -14,8 +14,13 @@
 //       possible. All code under MIT licence.
 
 #include "server.hpp"
+#include "route.hpp"
 
-int server::start() {
+Server::Server(int PORT) {
+  port = PORT;
+}
+
+int Server::start() {
   std::cout << "\n\t pauls Web Server v1\n\n";
   std::cout << "server running on port : " << port << std::endl;
 
@@ -37,11 +42,36 @@ int server::start() {
     std::cout << "pws -> ERROR (listening) (" << errno << ") : " << strerror(errno) << std::endl;
     return -1;
   }
+
+  std::cout << "\n\t...server initialized..." << std::endl;
 }
 
-int server::run() {
+int Server::run() {
   // boucle principale qui gere toutes les request
   for (hit = 1; ; hit++) {
-    
+    if ((clientSocket = accept(listenSocket, (struct sockaddr *) &client_addr, &clientLength)) < 0) {
+      std::cout << "pws -> ERROR (accept) (" << errno << ") : " << strerror(errno) << std::endl;
+      exit(3);
+    }
+
+    if ((pip = fork()) < 0) {
+      std::cout << "pws -> ERROR (pip) ("<< errno << strerror(errno) << ")" << std::endl;
+      exit(3);
+    } else {
+      if (pip == 0) { // dans l'enfant
+	(void) close(listenSocket);
+	processInput(clientSocket, hit);
+      } else {
+	(void) close(clientSocket);
+      }
+    }
   }
+}
+
+int Server::processInput(int client, int hit) {
+  static char requestBuffer[BUFSIZE + 1];
+  int request = read(client, requestBuffer, BUFSIZE);
+  std::string buffer(requestBuffer);
+
+  routage(buffer.substr(0, buffer.find(' ')), buffer.substr(buffer.find(' ') + 1, buffer.find("HTTP") - 4));
 }

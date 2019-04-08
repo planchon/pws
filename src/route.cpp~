@@ -1,0 +1,5 @@
+void routage(char route) {
+  std::cout << route << std::endl;
+  switch route:
+  case "/"
+}
