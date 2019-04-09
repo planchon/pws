@@ -12,6 +12,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#include "route.hpp"
+
 #define MAX_WAITING_CONNEXION 64
 #define BUFSIZE 8096
 
@@ -45,3 +47,6 @@ public:
   int run();
   int processInput(int client, int hit);
 };
+
+Request parseRequest(std::string buffer);
+void printRequest(Request req);

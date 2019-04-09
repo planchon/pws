@@ -14,7 +14,6 @@
 //       possible. All code under MIT licence.
 
 #include "server.hpp"
-#include "route.hpp"
 
 Server::Server(int PORT) {
   port = PORT;
@@ -72,6 +71,7 @@ int Server::processInput(int client, int hit) {
   static char requestBuffer[BUFSIZE + 1];
   int request = read(client, requestBuffer, BUFSIZE);
   std::string buffer(requestBuffer);
-
-  routage(buffer.substr(0, buffer.find(' ')), buffer.substr(buffer.find(' ') + 1, buffer.find("HTTP") - 4));
+  Request req = parseRequest(buffer);
+  main_routage(req);
 }
+

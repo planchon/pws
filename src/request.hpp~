@@ -1,0 +1,6 @@
+struct Request {
+  std::string route;
+  std::string host;
+  std::string buffer;
+  std::string method;
+};
