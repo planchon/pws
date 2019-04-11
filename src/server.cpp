@@ -47,7 +47,7 @@ void Server::run() {
       if (pip == 0) {
 	close(serverSocket); // on close le socket qui est dans le pip.
 	Request req(clientSocket);
-	req.print_me();
+	routeRequest(req);
       } else {
 	close(clientSocket);
       }

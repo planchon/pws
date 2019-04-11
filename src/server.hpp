@@ -13,6 +13,7 @@
 #include <arpa/inet.h>
 
 #include "request.hpp"
+#include "route.hpp"
 
 class Server {
   int port, serverSocket, clientSocket, max_waiting_connexion, pip;
