@@ -1,4 +1,4 @@
 GCC=g++
 
 all:
-	$(GCC) src/request.cpp src/server.cpp src/route.cpp src/pws.cpp -o bin/pws
+	$(GCC) src/request.cpp src/server.cpp src/pws.cpp -std=c++11 -o bin/pws

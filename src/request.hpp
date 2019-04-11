@@ -1,12 +1,11 @@
+#include <unistd.h>
 #include <iostream>
-#include <string>
 
-struct Request {
-  std::string route;
-  std::string host;
-  std::string buffer;
-  std::string method;
+#define BUFSIZE 8192
+
+class Request {
+  char buffer[BUFSIZE];
+public:
+  Request(int socket);
+  void print_me();
 };
-
-void printRequest(Request req);
-Request parseRequest(std::string buffer);

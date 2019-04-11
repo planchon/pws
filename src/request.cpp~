@@ -1,6 +1,0 @@
-void printRequest(Request req) {
-  std::cout << "Method : " << req.method << std::endl;
-  std::cout << "Route : " << req.route << std::endl;
-  std::cout << "Host : " << req.host << std::endl;
-  std::cout << "Buffer : " << req.buffer << std::endl;
-}
