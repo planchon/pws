@@ -13,5 +13,6 @@ struct {
   {"htm", "text/html" },  
   {"html","text/html" },
   {"css","text/css"   },
+  {"pdf", "application/pdf"},
   {0,0}
 };

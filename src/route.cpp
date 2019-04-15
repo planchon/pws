@@ -25,6 +25,7 @@ void route_GET_method(Request req) {
   case str2int("blog"):
     break;
   case str2int("cv"):
+    static_one_file_generator(req, "template/cv/cv.pdf");
     break;
   case str2int("video"):
     break;
